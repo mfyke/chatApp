@@ -24,10 +24,18 @@ $(document).on("keyup", (event)=>{
     }
 }); 
 
+//listen for key press events
+$("#message").on("keypress", ()=>{
+    socket.emit("typing", $("#handle").val());
+});
 
-
-//listen for events
+//listen for chat events
 
 socket.on("chat", (data)=>{
+    $("#feedback").html("");
     $("#output").append(`<p><strong>${data.handle}:</strong>${data.message}</p>`);
+});
+
+socket.on("typing", (data)=>{
+    $("#feedback").html(`<p><em>${data} is typing a message...</em></p>`);
 });
